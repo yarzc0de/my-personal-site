@@ -48,7 +48,7 @@ function CustomCursor() {
         className="pointer-events-none fixed top-0 left-0 z-[10000] h-3 w-3 rounded-full"
         style={{ backgroundColor: hovering ? "var(--color-rust)" : "var(--color-text-primary)" }}
         animate={{ x: pos.x - 6, y: pos.y - 6, scale: hovering ? 0.5 : 1 }}
-        transition={{ type: "spring", stiffness: 500, damping: 28, mass: 0.5 }}
+        transition={{ duration: 0 }}
       />
       {/* Ring */}
       <motion.div
@@ -60,7 +60,7 @@ function CustomCursor() {
           scale: hovering ? 1.5 : 1,
           opacity: hovering ? 0.8 : 0.4,
         }}
-        transition={{ type: "spring", stiffness: 200, damping: 20, mass: 0.8 }}
+        transition={{ duration: 0 }}
       />
     </>
   );
