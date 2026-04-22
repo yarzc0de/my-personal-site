@@ -1,26 +1,165 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-display: "Space Mono", monospace;
+  --font-body: "Instrument Serif", serif;
+  --font-hero: "Caveat", cursive;
+
+  /* Warm parchment base */
+  --color-bg-base: oklch(0.95 0.015 75);
+  --color-bg-elevated: oklch(0.97 0.01 75);
+  --color-bg-surface: oklch(0.91 0.02 75);
+
+  /* Rich ink text */
+  --color-text-primary: oklch(0.22 0.03 50);
+  --color-text-secondary: oklch(0.38 0.025 50);
+  --color-text-muted: oklch(0.55 0.02 50);
+
+  /* Terracotta / rust — primary accent */
+  --color-rust: oklch(0.55 0.18 35);
+  --color-rust-light: oklch(0.82 0.08 35);
+
+  /* Sage green */
+  --color-sage: oklch(0.62 0.1 155);
+  --color-sage-light: oklch(0.88 0.06 155);
+
+  /* Dusty blue */
+  --color-slate: oklch(0.55 0.08 250);
+  --color-slate-light: oklch(0.88 0.04 250);
+
+  /* Warm ochre */
+  --color-ochre: oklch(0.75 0.14 75);
+  --color-ochre-light: oklch(0.92 0.06 75);
+
+  --color-border: oklch(0.85 0.02 75);
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Zine-style selection */
+::selection {
+  background-color: var(--color-rust);
+  color: var(--color-bg-elevated);
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 3px solid var(--color-rust);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+/* Grain texture overlay */
+@keyframes grain-shift {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -10%);
+  }
+  30% {
+    transform: translate(3%, -15%);
+  }
+  50% {
+    transform: translate(12%, 9%);
+  }
+  70% {
+    transform: translate(9%, 4%);
+  }
+  90% {
+    transform: translate(-1%, 7%);
+  }
+}
+
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  animation: grain-shift 8s steps(10) infinite;
+}
+
+/* Sticker rotation utility */
+.sticker-tilt {
+  transform: rotate(-2deg);
+}
+
+.sticker-tilt-right {
+  transform: rotate(2.5deg);
+}
+
+/* Dashed border zine style */
+.zine-border {
+  border: 2px dashed var(--color-border);
+}
+
+/* Scroll margin */
+section[id] {
+  scroll-margin-top: 2rem;
+}
+
+/* Custom cursor — hide default on desktop */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* Easter egg flash */
+@keyframes flash-bg {
+  0% { background-color: var(--color-rust-light); }
+  25% { background-color: var(--color-sage-light); }
+  50% { background-color: var(--color-ochre-light); }
+  75% { background-color: var(--color-slate-light); }
+  100% { background-color: var(--color-bg-base); }
+}
+
+.easter-flash {
+  animation: flash-bg 1s ease-out forwards;
 }
