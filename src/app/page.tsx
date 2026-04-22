@@ -358,7 +358,6 @@ function Landing() {
   return (
     <section
       id="landing"
-      id="landing"
       className="relative min-h-[100svh] overflow-hidden px-5 pb-12 pt-16 sm:px-8 sm:pt-24 lg:px-16"
     >
       {/* Decorative shapes */}
