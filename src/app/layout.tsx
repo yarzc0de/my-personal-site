@@ -66,7 +66,7 @@ export default function RootLayout({
       lang="en"
       className={`${caveat.variable} ${spaceMono.variable} ${instrumentSerif.variable}`}
     >
-      <body className="grain">{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
